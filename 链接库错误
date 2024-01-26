@@ -1,0 +1,94 @@
+sudo apt-get install libgtk3-nocsd0重新卸载然后安装，使用printenv检查pre_load是否还存在
+sudo echo "" > /etc/ld.so.preload
+sudo ldconfig
+sudo apt-get install build-essential module-assistant gcc-multilib g++-multilib
+--------------------------------------------------------------------------------
+fatal error: bits/libc-header-start.h: No such file or directory
+sudo apt-get install gcc-multilib
+--------------------------------------------------------------------------------
+gcc -m32 -no-pie -g -o plt plt.c
+objdump -h plt
+objdump -S plt
+disass main
+b *地址(行号)
+x/4i $pc
+x/wr 0x804a00c
+si(ni)
+--------------------------------------------------------------------------------
+命令               简写形式         说明
+backtrace          bt、where       显示backtrace
+break              b               设置断点
+continue           c、cont         继续执行
+delete             d               删除断点
+finish                             运行到函数结束
+info breakpoints                   显示断点信息
+next               n               执行下一行
+print              p               显示表达式
+run                r               运行程序
+step               s               一次执行一行，包括函数内部
+x                                  显示内存内容
+until              u               执行到指定行
+其他命令
+directory          dir             插入目录
+disable            dis             禁用断点
+down               do              在当前调用的栈帧中选择要显示的栈帧
+edit               e               编辑文件或者函数
+frame              f               选择要显示的栈帧
+forward-search     fo              向前搜索
+generate-core-file gcore           生成内核转存储
+help                h              显示帮助一览
+info                i              显示信息
+list                l              显示函数或行
+nexti               ni             执行下一行(以汇编代码为单位)
+print-object        po             显示目标信息
+sharelibrary        share          加载共享的符号
+
+（gdb）help：查看命令帮助，具体命令查询在gdb中输入help + 命令,简写h
+
+（gdb）run：重新开始运行文件（run-text：加载文本文件，run-bin：加载二进制文件）,简写r
+
+（gdb）start：单步执行，运行程序，停在第一执行语句
+
+（gdb）list：查看原代码（list-n,从第n行开始查看代码。list+ 函数名：查看具体函数）,简写l
+
+（gdb）set：设置变量的值
+
+（gdb）next：单步调试（逐过程，函数直接执行）,简写n
+
+（gdb）step：单步调试（逐语句：跳入自定义函数内部执行）,简写s
+
+（gdb）backtrace：查看函数的调用的栈帧和层级关系,简写bt
+
+（gdb）frame：切换函数的栈帧,简写f
+
+（gdb）info：查看函数内部局部变量的数值,简写i
+
+（gdb）finish：结束当前函数，返回到函数调用点
+
+（gdb）continue：继续运行,简写c
+
+（gdb）print：打印值及地址,简写p
+
+（gdb）quit：退出gdb,简写q
+
+（gdb）break+num：在第num行设置断点,简写b
+
+（gdb）info breakpoints：查看当前设置的所有断点
+
+（gdb）delete breakpoints num：删除第num个断点,简写d
+
+（gdb）display：追踪查看具体变量值
+
+（gdb）undisplay：取消追踪观察变量
+
+（gdb）watch：被设置观察点的变量发生修改时，打印显示
+
+（gdb）i watch：显示观察点
+
+（gdb）enable breakpoints：启用断点
+
+（gdb）disable breakpoints：禁用断点
+
+（gdb）x：查看内存x/20xw 显示20个单元，16进制，4字节每单元
+
+（gdb）run argv[1] argv[2]：调试时命令行传参
