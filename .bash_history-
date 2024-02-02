@@ -1,0 +1,28 @@
+./scripts/feeds update -a
+./scripts/feeds install -a
+make download
+make -j20 V=99
+docker images
+docker ps -a
+source oe-init-build-env
+bitbake world -c fetch
+bitbake meta-toolchain
+bitbake meta-ide-support
+bitbake core-image-minimal
+bitbake core-image-full-cmdline
+bitbake core-image-sato
+bitbake core-image-weston
+grep -rinI 'ghcr.io' .
+./compile.sh build BOARD=uefi-x86 BRANCH=legacy BUILD_DESKTOP=no BUILD_MINIMAL=no KERNEL_CONFIGURE=no RELEASE=bookworm DOWNLOAD_MIRROR=china GHCR_MIRROR=dockerproxy
+./compile.sh build BOARD=uefi-x86 BRANCH=current BUILD_DESKTOP=no BUILD_MINIMAL=yes KERNEL_CONFIGURE=no RELEASE=bullseye DOWNLOAD_MIRROR=china GHCR_MIRROR=dockerproxy
+./compile.sh build BOARD=uefi-x86 BRANCH=edge BUILD_DESKTOP=yes BUILD_MINIMAL=no DESKTOP_APPGROUPS_SELECTED='3dsupport browsers chat desktop_tools editors internet multimedia office programming remote_desktop' DESKTOP_ENVIRONMENT=cinnamon DESKTOP_ENVIRONMENT_CONFIG_NAME=config_base KERNEL_CONFIGURE=no RELEASE=jammy DOWNLOAD_MIRROR=china GHCR_MIRROR=dockerproxy
+sudo sh -c 'sed -i "/# GitHub520 Host Start/Q" /etc/hosts && curl https://raw.hellogithub.com/hosts >> /etc/hosts'
+sudo /etc/init.d/nscd restart
+sudo /etc/init.d/networking restart
+cd caddy/
+sudo cp steamcommunityCA.pem /usr/local/share/ca-certificates/steamcommunityCA.crt
+sudo update-ca-certificates
+sudo chmod +x caddy
+sudo ./caddy run --config steamcommunity_302.caddy.json --adapter caddyfile
+ssh -T git@github.com
+ssh -v git@github.com
